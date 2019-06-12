@@ -1,7 +1,7 @@
 package designpatten;
 public class Singleton {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		// shall call singletonClassic hello method
 		singletonClassic.getInstance().hello();
 		singletonClassic.getInstance().hello();
@@ -12,6 +12,10 @@ public class Singleton {
 	     Thread t2 = new Thread(new MThreadmy(), "t2");
 	     t1.start();
 	     t2.start();
+	     t1.join();
+	     t2.join();
+	     ///////////////////////////////////////////////
+	     singletonEager.getInstance().hello();
 	}
 
 }
@@ -66,5 +70,22 @@ class singletonThreadSafe{
 		for(int i=0;i<=20;i++) {
 			System.out.println(i);
 		}
+	}
+}
+
+//this method is also thread safe but it is not used synchronization it does not decrease
+//the performance of your program but there is a disadvantage, does not matter even we use that 
+// class or not, the object will be initialized so Use this method only when your singleton class
+//is light and is used throughout the execution of your program.
+class singletonEager{ 
+	private static singletonEager obj = new singletonEager();
+	private singletonEager() {
+		
+	}
+	public static singletonEager getInstance() {
+		return obj;
+	}
+	public void hello() {
+		System.out.println("sasadaraEager");
 	}
 }
