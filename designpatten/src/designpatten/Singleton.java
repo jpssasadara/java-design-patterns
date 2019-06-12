@@ -8,7 +8,10 @@ public class Singleton {
 		singletonClassic.getInstance().hello();
 		singletonClassic.getInstance().hello2();
 		/////////////////////////////////////////////
-
+		 Thread t1 = new Thread(new MThreadmy(), "t1");
+	     Thread t2 = new Thread(new MThreadmy(), "t2");
+	     t1.start();
+	     t2.start();
 	}
 
 }
@@ -52,6 +55,7 @@ class singletonThreadSafe{
 	}
 	public static synchronized singletonThreadSafe getInstance() {
 		if(obj == null) {
+			System.out.println("singletonThreadSafe => object is created");
 			obj = new singletonThreadSafe();
 		}
 		return obj;
@@ -59,5 +63,8 @@ class singletonThreadSafe{
 	}
 	public void hello() {
 		System.out.println("sasadara");
+		for(int i=0;i<=20;i++) {
+			System.out.println(i);
+		}
 	}
 }
