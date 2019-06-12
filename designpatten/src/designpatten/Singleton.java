@@ -16,6 +16,11 @@ public class Singleton {
 	     t2.join();
 	     ///////////////////////////////////////////////
 	     singletonEager.getInstance().hello();
+	     //////////////////////////////////////////////
+	     MTreadmy2 t3 = new MTreadmy2("t3");
+	     MTreadmy2 t4 = new MTreadmy2("t4");
+	     t3.start();
+	     t4.start();
 	}
 
 }
@@ -89,3 +94,41 @@ class singletonEager{
 		System.out.println("sasadaraEager");
 	}
 }
+
+// “Double Checked Locking”  This is the BEST WAY
+
+//(1)=>private constructors since objects can not be created outside of the class
+//(2)=>variable is static since method is static otherwise can not access
+//(3)=>variable is private otherwise outside class can be directly access since variable is static
+//(4)=>method is public and static so outside classes can be directly access without creating object 
+//(5)=>Double checking since before going to synchronize part it will check whether object is initialized or not so not reducing performance
+
+class singletonDoubleCheck 
+{ 
+    private volatile static singletonDoubleCheck obj; 
+  
+    private singletonDoubleCheck() {} 
+  
+    public static singletonDoubleCheck getInstance() 
+    { 
+        if (obj == null) 
+        { 
+            // To make thread safe 
+            synchronized (singletonDoubleCheck.class) 
+            { 
+                // check again as multiple threads 
+                // can reach above step 
+                if (obj==null) 
+                    obj = new singletonDoubleCheck(); 
+            } 
+        } 
+        return obj; 
+    }
+    public void hello() {
+		System.out.println("hello sasadara");
+		for(int i=50;i<=70;i++) {
+			System.out.println(i);
+		}
+	}
+} 
+
