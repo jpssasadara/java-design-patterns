@@ -41,3 +41,23 @@ class singletonClassic{
 	}
 	//////YES WE CAN  create inside the class but cann't outside the class///////////////////////////////////////////
 }
+
+//singletonClassic implementation is not a thread safe shall we make it 
+//thread safe using synchronize key word
+
+class singletonThreadSafe{
+	private static singletonThreadSafe obj;
+	private singletonThreadSafe() {
+		
+	}
+	public static synchronized singletonThreadSafe getInstance() {
+		if(obj == null) {
+			obj = new singletonThreadSafe();
+		}
+		return obj;
+		
+	}
+	public void hello() {
+		System.out.println("sasadara");
+	}
+}
